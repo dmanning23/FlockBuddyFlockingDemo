@@ -25,3 +25,15 @@
 [submodule "externals/CellSpacePartition"]
 	path = externals/CellSpacePartition
 	url = git@github.com:dmanning23/CellSpacePartition.git
+[submodule "externals/FlockBuddy"]
+	path = externals/FlockBuddy
+	url = git@github.com:dmanning23/FlockBuddy.git
+[submodule "externals/HadoukInput"]
+	path = externals/HadoukInput
+	url = git@github.com:dmanning23/HadoukInput.git
+[submodule "externals/FontBuddy"]
+	path = externals/FontBuddy
+	url = git@github.com:dmanning23/FontBuddy.git
+[submodule "externals/Filename"]
+	path = externals/Filename
+	url = git@github.com:dmanning23/Filename.git
