@@ -1,9 +1,14 @@
 using FontBuddyLib;
-using GameTimer;
-using HadoukInput;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Vector2Extensions;
+using System.Collections.Generic;
+using GameTimer;
+using Microsoft.Xna.Framework;
+using HadoukInput;
 using Microsoft.Xna.Framework.Input;
+using FlockBuddy;
+using System;
+using RandomExtensions;
 
 namespace FlockBuddyFlockingDemo
 {
@@ -19,30 +24,17 @@ namespace FlockBuddyFlockingDemo
 
 		GraphicsDeviceManager graphics;
 		SpriteBatch spriteBatch;
-
-		/// <summary>
-		/// A font buddy we will use to write out to the screen
-		/// </summary>
-		private FontBuddy _text = new FontBuddy();
-
-		/// <summary>
-		/// THe controller object we gonna use to test
-		/// </summary>
-		private ControllerWrapper _controller;
-
-		/// <summary>
-		/// The timers we are gonna use to time the button down events
-		/// </summary>
-		private CountdownTimer[] _ButtonTimer;
-
 		private InputState m_Input = new InputState();
 
-		/// <summary>
-		/// The controller index of this player
-		/// </summary>
-		private PlayerIndex _player = PlayerIndex.One;
+		Flock Dudes { get; set; }
 
-		private bool _flipped = false;
+		Flock BadGuys { get; set; }
+
+		List<BaseEntity> Obstacles { get; set; }
+
+		Random g_Random = new Random();
+
+		Texture2D boidTexture;
 
 		#endregion //Members
 
@@ -57,13 +49,51 @@ namespace FlockBuddyFlockingDemo
 			graphics.PreferredBackBufferHeight = 768;
 			graphics.IsFullScreen = false;
 
-			_controller = new ControllerWrapper(PlayerIndex.One, true);
-			_ButtonTimer = new CountdownTimer[(int)EKeystroke.RTriggerRelease + 1];
+			Reset();
+		}
 
-			for (int i = 0; i < ((int)EKeystroke.RTriggerRelease + 1); i++)
+		private void Reset()
+		{
+			//create the flock of dudes
+			Dudes = new Flock();
+			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
+			for (int i = 0; i < 50; i++)
 			{
-				_ButtonTimer[i] = new CountdownTimer();
+				//create a random position
+				Vector2 pos = g_Random.NextVector2(0.0f, 1024.0f, 0.0f, 768.0f);
+				Vector2 vel = g_Random.NextVector2(-100.0f, 100.0f, -100.0f, 100.0f);
+
+				//create the dude
+				Boid dude = new Boid(
+					Dudes, 
+					pos, 
+					10.0f, 
+					g_Random.NextFloat(0.0f, (2.0f * 3.14f)), 
+					vel, 
+					1.0f, 
+					100.0f, 
+					100.0f,
+					10.0f);
+
+				//setup his behaviors
+				dude.Behaviors.ActivateBehaviors( new EBehaviorType [] {
+					EBehaviorType.alignment,
+					EBehaviorType.cohesion,
+					EBehaviorType.separation 
+				});
+
+				Dudes.AddDude(dude);
 			}
+
+			//create the flock of bad guys
+
+			//create the obstacles
+
+			//set the dudes to run away from bad guys
+
+			//make the bad guys chase the dudes
+
+			//make everybody avoid the obstacles
 		}
 
 		/// <summary>
@@ -75,12 +105,7 @@ namespace FlockBuddyFlockingDemo
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			// TODO: use this.Content to load your game content here
-#if OUYA
-			_text.LoadContent(Content, "ArialBlack14");
-#else
-			_text.LoadContent(Content, "ArialBlack10");
-#endif
+			boidTexture = this.Content.Load<Texture2D>("boid.png");
 		}
 
 		/// <summary>
@@ -106,49 +131,16 @@ namespace FlockBuddyFlockingDemo
 				this.Exit();
 			}
 
-			//Update the controller
 			m_Input.Update();
-			_controller.Update(m_Input);
 
-			//check if the player is switching controllers
-			if (CheckKeyDown(m_Input, Keys.D1))
+			//check if the player wants to reset the simulation
+			if (CheckKeyDown(m_Input, Keys.Z))
 			{
-				_player = PlayerIndex.One;
-				_controller = new ControllerWrapper(_player);
-			}
-			else if (CheckKeyDown(m_Input, Keys.D2))
-			{
-				_player = PlayerIndex.Two;
-				_controller = new ControllerWrapper(_player);
-			}
-			else if (CheckKeyDown(m_Input, Keys.D3))
-			{
-				_player = PlayerIndex.Three;
-				_controller = new ControllerWrapper(_player);
-			}
-			else if (CheckKeyDown(m_Input, Keys.D4))
-			{
-				_player = PlayerIndex.Four;
-				_controller = new ControllerWrapper(_player);
+				Reset();
 			}
 
-			//check if the player wants to face a different direction
-			if (CheckKeyDown(m_Input, Keys.Q))
-			{
-				_flipped = !_flipped;
-			}
-
-			//check if the player wants to switch between scrubbed/powercurve
-			if (CheckKeyDown(m_Input, Keys.W))
-			{
-				DeadZoneType thumbstick = _controller.Thumbsticks.ThumbstickScrubbing;
-				thumbstick++;
-				if (thumbstick > DeadZoneType.PowerCurve)
-				{
-					thumbstick = DeadZoneType.Axial;
-				}
-				_controller.Thumbsticks.ThumbstickScrubbing = thumbstick;
-			}
+			//update the flock
+			Dudes.Update(gameTime);
 
 			base.Update(gameTime);
 		}
@@ -159,80 +151,15 @@ namespace FlockBuddyFlockingDemo
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Draw(GameTime gameTime)
 		{
-			GraphicsDevice.Clear(Color.CornflowerBlue);
+			GraphicsDevice.Clear(Color.Gray);
 
 			spriteBatch.Begin();
 
-			Vector2 position = new Vector2(graphics.GraphicsDevice.Viewport.TitleSafeArea.Left, graphics.GraphicsDevice.Viewport.TitleSafeArea.Top);
+			foreach (Boid dude in Dudes.Dudes)
+			{
+				spriteBatch.Draw(boidTexture, dude.Position, null, Color.White, dude.Rotation, Vector2.Zero, 1.0f, SpriteEffects.None, 1.0f);
+			}
 			
-			//say what controller we are checking
-			_text.Write("Controller Index: " + _player.ToString(), position, Justify.Left, 1.0f, Color.White, spriteBatch);
-			position.Y += _text.Font.LineSpacing;
-
-			//is the controller plugged in?
-			_text.Write("Controller Plugged In: " + _controller.ControllerPluggedIn.ToString(), position, Justify.Left, 1.0f, Color.White, spriteBatch);
-			position.Y += _text.Font.LineSpacing;
-
-			//are we using the keyboard?
-			_text.Write("Use Keyboard: " + _controller.UseKeyboard.ToString(), position, Justify.Left, 1.0f, Color.White, spriteBatch);
-			position.Y += _text.Font.LineSpacing;
-
-			//say what type of thumbstick scrubbing we are doing
-			_text.Write("Thumbstick type: " + _controller.Thumbsticks.ThumbstickScrubbing.ToString(), position, Justify.Left, 1.0f, Color.White, spriteBatch);
-			position.Y += _text.Font.LineSpacing;
-
-			//what direction is the player facing
-			_text.Write("Player is facing: " + (_flipped ? "left" : "right"), position, Justify.Left, 1.0f, Color.White, spriteBatch);
-			position.Y += (_text.Font.LineSpacing * 2.0f);
-			float buttonPos = position.Y;
-
-			//draw the current pressed state of each keystroke
-			for (EKeystroke i = 0; i <= EKeystroke.RTrigger; i++)
-			{
-				//Write the name of the button
-				position.X = _text.Write(i.ToString() + ": ", position, Justify.Left, 1.0f, Color.White, spriteBatch);
-
-				//is the button currently active
-				if (_controller.CheckKeystroke(i, _flipped, (_flipped ? new Vector2(-1.0f, 0.0f) : new Vector2(1.0f, 0.0f))))
-				{
-					position.X = _text.Write("held ", position, Justify.Left, 1.0f, Color.White, spriteBatch);
-				}
-
-				if (EKeystroke.A == i)
-				{
-					buttonPos = position.Y;
-				}
-
-				//move the position to the next line
-				position.Y += _text.Font.LineSpacing;
-				position.X = 0.0f;
-			}
-
-			//reset position
-			position.Y = buttonPos;
-			position.X = 256.0f;
-
-			//draw the current released state of each keystroke
-			for (EKeystroke i = EKeystroke.ARelease; i <= EKeystroke.RTriggerRelease; i++)
-			{
-				//Write the name of the button
-				position.X = _text.Write(i.ToString() + ": ", position, Justify.Left, 1.0f, Color.White, spriteBatch);
-
-				//is the button currently active
-				if (_controller.CheckKeystroke(i, _flipped, (_flipped ? new Vector2(-1.0f, 0.0f) : new Vector2(1.0f, 0.0f))))
-				{
-					position.X = _text.Write("held ", position, Justify.Left, 1.0f, Color.White, spriteBatch);
-				}
-
-				//move the position to the next line
-				position.Y += _text.Font.LineSpacing;
-				position.X = 256.0f;
-			}
-
-			//write the raw thumbstick direction
-			position.X = _text.Write("direction: ", position, Justify.Left, 1.0f, Color.White, spriteBatch);
-			position.X = _text.Write(_controller.Thumbsticks.LeftThumbstick.Direction.ToString(), position, Justify.Left, 1.0f, Color.White, spriteBatch);
-
 			spriteBatch.End();
 
 			base.Draw(gameTime);
