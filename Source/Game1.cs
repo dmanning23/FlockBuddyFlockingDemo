@@ -61,25 +61,26 @@ namespace FlockBuddyFlockingDemo
 			{
 				//create a random position
 				Vector2 pos = g_Random.NextVector2(0.0f, 1024.0f, 0.0f, 768.0f);
-				Vector2 vel = g_Random.NextVector2(-100.0f, 100.0f, -100.0f, 100.0f);
+				Vector2 heading = g_Random.NextVector2(-1.0f, 1.0f, -1.0f, 1.0f);
+				heading.Normalize();
 
 				//create the dude
 				Boid dude = new Boid(
 					Dudes, 
 					pos, 
 					10.0f, 
-					g_Random.NextFloat(0.0f, (2.0f * 3.14f)), 
-					vel, 
+					heading,
+					100.0f + (g_Random.NextFloat() * 10.0f), 
 					1.0f, 
-					100.0f, 
-					100.0f,
-					10.0f);
+					500.0f, 
+					1.0f,
+					100.0f);
 
 				//setup his behaviors
 				dude.Behaviors.ActivateBehaviors( new EBehaviorType [] {
-					EBehaviorType.alignment,
-					EBehaviorType.cohesion,
-					EBehaviorType.separation 
+					EBehaviorType.alignment//,
+					//EBehaviorType.cohesion,
+					//EBehaviorType.separation 
 				});
 
 				Dudes.AddDude(dude);
