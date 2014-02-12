@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Input;
 using FlockBuddy;
 using System;
 using RandomExtensions;
+using BasicPrimitiveBuddy;
 
 namespace FlockBuddyFlockingDemo
 {
@@ -35,6 +36,10 @@ namespace FlockBuddyFlockingDemo
 		Random g_Random = new Random();
 
 		Texture2D boidTexture;
+
+		XNABasicPrimitive prim;
+		bool DrawCells = false;
+		bool drawNeighbors = false;
 
 		#endregion //Members
 
@@ -160,6 +165,7 @@ namespace FlockBuddyFlockingDemo
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
 			boidTexture = this.Content.Load<Texture2D>("boid.png");
+			prim = new XNABasicPrimitive(GraphicsDevice, spriteBatch);
 		}
 
 		/// <summary>
@@ -193,6 +199,18 @@ namespace FlockBuddyFlockingDemo
 				Reset();
 			}
 
+			//check if the player wants to reset the simulation
+			if (CheckKeyDown(m_Input, Keys.X))
+			{
+				DrawCells = !DrawCells;
+			}
+
+			//check if we want to draw the neighbors
+			if (CheckKeyDown(m_Input, Keys.C))
+			{
+				drawNeighbors = !drawNeighbors;
+			}
+
 			//update the flock
 			Dudes.Update(gameTime);
 
@@ -209,9 +227,17 @@ namespace FlockBuddyFlockingDemo
 
 			spriteBatch.Begin();
 
+			Dudes.Render(prim, DrawCells);
+
 			foreach (Boid dude in Dudes.Dudes)
 			{
 				spriteBatch.Draw(boidTexture, dude.Position, null, Color.White, dude.Rotation, Vector2.Zero, 1.0f, SpriteEffects.None, 1.0f);
+			}
+
+			//draw neighbors?
+			if (drawNeighbors)
+			{
+				Dudes.Dudes[0].DrawNeigbors(prim);
 			}
 			
 			spriteBatch.End();
