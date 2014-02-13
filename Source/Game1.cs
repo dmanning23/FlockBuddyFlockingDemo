@@ -40,6 +40,7 @@ namespace FlockBuddyFlockingDemo
 		XNABasicPrimitive prim;
 		bool DrawCells = false;
 		bool drawNeighbors = false;
+		bool drawVectors = false;
 
 		#endregion //Members
 
@@ -117,9 +118,9 @@ namespace FlockBuddyFlockingDemo
 
 			//setup his behaviors
 			dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
-					EBehaviorType.alignment//,
-					//EBehaviorType.cohesion,
-					//EBehaviorType.separation 
+					EBehaviorType.alignment,
+					EBehaviorType.cohesion,
+					EBehaviorType.separation 
 				});
 
 			Dudes.AddDude(dude);
@@ -185,6 +186,12 @@ namespace FlockBuddyFlockingDemo
 				drawNeighbors = !drawNeighbors;
 			}
 
+			//check if we want to draw the neighbors
+			if (CheckKeyDown(m_Input, Keys.V))
+			{
+				drawVectors = !drawVectors;
+			}
+
 			//update the flock
 			Dudes.Update(gameTime);
 
@@ -217,7 +224,10 @@ namespace FlockBuddyFlockingDemo
 				Dudes.Dudes[0].DrawNeigbors(prim);
 			}
 
-			Dudes.DrawVectors(prim);
+			if (drawVectors)
+			{
+				Dudes.DrawVectors(prim);
+			}
 			
 			spriteBatch.End();
 
