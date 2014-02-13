@@ -54,7 +54,7 @@ namespace FlockBuddyFlockingDemo
 			graphics.PreferredBackBufferHeight = 768;
 			graphics.IsFullScreen = false;
 
-			Reset();
+			Reset1();
 		}
 
 		private void Reset()
@@ -62,103 +62,13 @@ namespace FlockBuddyFlockingDemo
 			//create the flock of dudes
 			Dudes = new Flock();
 			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
-			//for (int i = 0; i < 50; i++)
-			//{
-			//	//create a random position
-			//	Vector2 pos = g_Random.NextVector2(0.0f, 1024.0f, 0.0f, 768.0f);
-			//	Vector2 heading = g_Random.NextVector2(-1.0f, 1.0f, -1.0f, 1.0f);
-			//	heading.Normalize();
-
-			//	//create the dude
-			//	Boid dude = new Boid(
-			//		Dudes, 
-			//		pos, 
-			//		10.0f, 
-			//		heading,
-			//		50.0f + (g_Random.NextFloat() * 10.0f), 
-			//		1.0f, 
-			//		500.0f, 
-			//		1.0f,
-			//		100.0f);
-
-			//	//setup his behaviors
-			//	dude.Behaviors.ActivateBehaviors( new EBehaviorType [] {
-			//		EBehaviorType.alignment//,
-			//		//EBehaviorType.cohesion,
-			//		//EBehaviorType.separation 
-			//	});
-
-			//	Dudes.AddDude(dude);
-			//}
-
-				//create a random position
-				Vector2 pos = new Vector2(500.0f, 200.0f);
-				Vector2 heading = new Vector2(1.0f, 0.0f);
-				heading.Normalize();
-
-				//create the dude
-				Boid dude = new Boid(
-					Dudes,
-					pos,
-					10.0f,
-					heading,
-					50.0f,
-					1.0f,
-					500.0f,
-					1.0f,
-					100.0f);
-
-				//setup his behaviors
-				dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
-					EBehaviorType.alignment,
-					EBehaviorType.cohesion,
-					EBehaviorType.separation 
-				});
-
-				Dudes.AddDude(dude);
-
-
-				//create the dude
-				pos = new Vector2(800.0f, 200.0f);
-				heading = new Vector2(-1.0f, 0.0f);
-				heading.Normalize();
-				dude = new Boid(
-					Dudes,
-					pos,
-					10.0f,
-					heading,
-					50.0f,
-					1.0f,
-					500.0f,
-					1.0f,
-					100.0f);
-				dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
-					EBehaviorType.alignment,
-					EBehaviorType.cohesion,
-					EBehaviorType.separation 
-				});
-				Dudes.AddDude(dude);
-
-				//create the dude
-				pos = new Vector2(800.0f, 250.0f);
-				heading = new Vector2(-9.0f, 0.10f);
-				heading.Normalize();
-				dude = new Boid(
-					Dudes,
-					pos,
-					10.0f,
-					heading,
-					50.0f,
-					1.0f,
-					500.0f,
-					1.0f,
-					100.0f);
-				dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
-					EBehaviorType.alignment,
-					EBehaviorType.cohesion,
-					EBehaviorType.separation 
-				});
-				Dudes.AddDude(dude);
+			for (int i = 0; i < 50; i++)
+			{
+				//create a random dude
+				AddDude(g_Random.NextVector2(0.0f, 1024.0f, 0.0f, 768.0f),
+					g_Random.NextVector2(-1.0f, 1.0f, -1.0f, 0.50f),
+					50.0f + (g_Random.NextFloat() * 50.0f));
+			}
 
 			//create the flock of bad guys
 
@@ -169,6 +79,50 @@ namespace FlockBuddyFlockingDemo
 			//make the bad guys chase the dudes
 
 			//make everybody avoid the obstacles
+		}
+
+		public void Reset1()
+		{
+			Dudes = new Flock();
+			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
+
+			//AddDude(new Vector2(600.0f, 100.0f),
+			//		new Vector2(-0.5f, 1.5f),
+			//		50.0f);
+
+			AddDude(new Vector2(300.0f, 500.0f),
+					new Vector2(-0.5f, -1.5f),
+					50.0f);
+
+			AddDude(new Vector2(100.0f, 500.0f),
+					new Vector2(0.0f, -1.0f),
+					50.0f);
+
+		}
+
+		public void AddDude(Vector2 pos, Vector2 heading, float speed)
+		{
+			heading.Normalize();
+
+			var dude = new Boid(
+						Dudes,
+						pos,
+						10.0f,
+						heading,
+						speed,
+						1.0f,
+						500.0f,
+						0.5f,
+						100.0f);
+
+			//setup his behaviors
+			dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
+					EBehaviorType.alignment//,
+					//EBehaviorType.cohesion,
+					//EBehaviorType.separation 
+				});
+
+			Dudes.AddDude(dude);
 		}
 
 		/// <summary>
@@ -214,6 +168,10 @@ namespace FlockBuddyFlockingDemo
 			{
 				Reset();
 			}
+			if (CheckKeyDown(m_Input, Keys.A))
+			{
+				Reset1();
+			}
 
 			//check if the player wants to reset the simulation
 			if (CheckKeyDown(m_Input, Keys.X))
@@ -243,7 +201,10 @@ namespace FlockBuddyFlockingDemo
 
 			spriteBatch.Begin();
 
-			Dudes.Render(prim, DrawCells);
+			if (DrawCells)
+			{
+				Dudes.DrawCells(prim);
+			}
 
 			foreach (Boid dude in Dudes.Dudes)
 			{
@@ -255,6 +216,8 @@ namespace FlockBuddyFlockingDemo
 			{
 				Dudes.Dudes[0].DrawNeigbors(prim);
 			}
+
+			Dudes.DrawVectors(prim);
 			
 			spriteBatch.End();
 
