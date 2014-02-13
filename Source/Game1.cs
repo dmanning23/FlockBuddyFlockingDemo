@@ -93,7 +93,7 @@ namespace FlockBuddyFlockingDemo
 
 				//create a random position
 				Vector2 pos = new Vector2(500.0f, 200.0f);
-				Vector2 heading = new Vector2(0.9f, 0.1f);
+				Vector2 heading = new Vector2(1.0f, 0.0f);
 				heading.Normalize();
 
 				//create the dude
@@ -110,20 +110,18 @@ namespace FlockBuddyFlockingDemo
 
 				//setup his behaviors
 				dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
-					EBehaviorType.alignment//,
-					//EBehaviorType.cohesion,
-					//EBehaviorType.separation 
+					EBehaviorType.alignment,
+					EBehaviorType.cohesion,
+					EBehaviorType.separation 
 				});
 
 				Dudes.AddDude(dude);
 
 
-				//create a random position
-				pos = new Vector2(800.0f, 200.0f);
-				heading = new Vector2(-0.9f, 0.1f);
-				heading.Normalize();
-
 				//create the dude
+				pos = new Vector2(800.0f, 200.0f);
+				heading = new Vector2(-1.0f, 0.0f);
+				heading.Normalize();
 				dude = new Boid(
 					Dudes,
 					pos,
@@ -134,14 +132,32 @@ namespace FlockBuddyFlockingDemo
 					500.0f,
 					1.0f,
 					100.0f);
-
-				//setup his behaviors
 				dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
-					EBehaviorType.alignment//,
-					//EBehaviorType.cohesion,
-					//EBehaviorType.separation 
+					EBehaviorType.alignment,
+					EBehaviorType.cohesion,
+					EBehaviorType.separation 
 				});
+				Dudes.AddDude(dude);
 
+				//create the dude
+				pos = new Vector2(800.0f, 250.0f);
+				heading = new Vector2(-9.0f, 0.10f);
+				heading.Normalize();
+				dude = new Boid(
+					Dudes,
+					pos,
+					10.0f,
+					heading,
+					50.0f,
+					1.0f,
+					500.0f,
+					1.0f,
+					100.0f);
+				dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
+					EBehaviorType.alignment,
+					EBehaviorType.cohesion,
+					EBehaviorType.separation 
+				});
 				Dudes.AddDude(dude);
 
 			//create the flock of bad guys
