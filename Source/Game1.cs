@@ -35,8 +35,6 @@ namespace FlockBuddyFlockingDemo
 
 		Random g_Random = new Random();
 
-		Texture2D boidTexture;
-
 		XNABasicPrimitive prim;
 		bool DrawCells = false;
 		bool drawNeighbors = false;
@@ -74,6 +72,8 @@ namespace FlockBuddyFlockingDemo
 			//create the flock of bad guys
 
 			//create the obstacles
+			Obstacles = new List<BaseEntity>();
+			Dudes.Obstacles = Obstacles;
 
 			//set the dudes to run away from bad guys
 
@@ -91,14 +91,73 @@ namespace FlockBuddyFlockingDemo
 			//		new Vector2(-0.5f, 1.5f),
 			//		50.0f);
 
-			AddDude(new Vector2(300.0f, 500.0f),
-					new Vector2(-0.5f, -1.5f),
+			//AddDude(new Vector2(300.0f, 500.0f),
+			//		new Vector2(-0.5f, -1.5f),
+			//		50.0f);
+
+			AddDude(new Vector2(200.0f, 250.0f),
+					new Vector2(1.0f, 0.0f),
 					50.0f);
 
-			AddDude(new Vector2(100.0f, 500.0f),
+			Obstacles = new List<BaseEntity>();
+			Dudes.Obstacles = Obstacles;
+
+			AddObstacle(new Vector2(400.0f, 300.0f), 60.0f);
+		}
+
+		public void Reset2()
+		{
+			Dudes = new Flock();
+			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
+
+			AddDude(new Vector2(150.0f, 500.0f),
 					new Vector2(0.0f, -1.0f),
 					50.0f);
 
+			Obstacles = new List<BaseEntity>();
+			Dudes.Obstacles = Obstacles;
+
+			AddObstacle(new Vector2(200.0f, 300.0f), 60.0f);
+		}
+
+		public void Reset3()
+		{
+			Dudes = new Flock();
+			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
+
+			//going down
+			for (float x = 300.0f; x <= 500.0f; x += 25.0f)
+			{
+				AddDude(new Vector2(x, 200.0f),
+						new Vector2(0.0f, 1.0f),
+						50.0f);
+			}
+
+			for (float x = 300.0f; x <= 500.0f; x += 25.0f)
+			{
+				AddDude(new Vector2(x, 600.0f),
+						new Vector2(0.0f, -1.0f),
+						50.0f);
+			}
+
+			for (float y = 300.0f; y <= 500.0f; y += 25.0f)
+			{
+				AddDude(new Vector2(200.0f, y),
+						new Vector2(1.0f, 0.0f),
+						50.0f);
+			}
+
+			for (float y = 300.0f; y <= 500.0f; y += 25.0f)
+			{
+				AddDude(new Vector2(600.0f, y),
+						new Vector2(-1.0f, 0.0f),
+						50.0f);
+			}
+
+			Obstacles = new List<BaseEntity>();
+			Dudes.Obstacles = Obstacles;
+
+			AddObstacle(new Vector2(400.0f, 400.0f), 60.0f);
 		}
 
 		public void AddDude(Vector2 pos, Vector2 heading, float speed)
@@ -113,17 +172,24 @@ namespace FlockBuddyFlockingDemo
 						speed,
 						1.0f,
 						500.0f,
-						0.5f,
+						1.0f,
 						100.0f);
 
 			//setup his behaviors
 			dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
 					EBehaviorType.alignment,
 					EBehaviorType.cohesion,
-					EBehaviorType.separation 
+					EBehaviorType.separation,
+					EBehaviorType.obstacle_avoidance
 				});
 
 			Dudes.AddDude(dude);
+		}
+
+		public void AddObstacle(Vector2 pos, float radius)
+		{
+			var obs = new BaseEntity(pos, radius);
+			Obstacles.Add(obs);
 		}
 
 		/// <summary>
@@ -135,7 +201,6 @@ namespace FlockBuddyFlockingDemo
 			// Create a new SpriteBatch, which can be used to draw textures.
 			spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			boidTexture = this.Content.Load<Texture2D>("boid.png");
 			prim = new XNABasicPrimitive(GraphicsDevice, spriteBatch);
 		}
 
@@ -173,6 +238,14 @@ namespace FlockBuddyFlockingDemo
 			{
 				Reset1();
 			}
+			if (CheckKeyDown(m_Input, Keys.Q))
+			{
+				Reset2();
+			}
+			if (CheckKeyDown(m_Input, Keys.W))
+			{
+				Reset3();
+			}
 
 			//check if the player wants to reset the simulation
 			if (CheckKeyDown(m_Input, Keys.X))
@@ -190,6 +263,14 @@ namespace FlockBuddyFlockingDemo
 			if (CheckKeyDown(m_Input, Keys.V))
 			{
 				drawVectors = !drawVectors;
+			}
+			
+			//add an obstacle
+			if (CheckKeyDown(m_Input, Keys.B))
+			{
+				Vector2 pos = g_Random.NextVector2(100.0f, 900.0f, 100.0f, 600.0f);
+				float radius = g_Random.NextFloat(50.0f, 200.0f);
+				AddObstacle(pos, radius);
 			}
 
 			//update the flock
@@ -213,9 +294,14 @@ namespace FlockBuddyFlockingDemo
 				Dudes.DrawCells(prim);
 			}
 
-			foreach (Boid dude in Dudes.Dudes)
+			foreach (var dude in Dudes.Dudes)
 			{
-				spriteBatch.Draw(boidTexture, dude.Position, null, Color.White, dude.Rotation, Vector2.Zero, 1.0f, SpriteEffects.None, 1.0f);
+				dude.Render(prim);
+			}
+
+			foreach (var dude in Obstacles)
+			{
+				prim.Circle(dude.Position, dude.Physics.Radius, Color.White);
 			}
 
 			//draw neighbors?
