@@ -301,7 +301,7 @@ namespace FlockBuddyFlockingDemo
 
 			foreach (var dude in Obstacles)
 			{
-				prim.Circle(dude.Position, dude.Physics.Radius, Color.White);
+				dude.DrawPhysics(prim, Color.White);
 			}
 
 			//draw neighbors?
