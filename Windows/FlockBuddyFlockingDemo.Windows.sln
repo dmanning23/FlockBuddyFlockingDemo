@@ -33,6 +33,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filename.Windows", "..\exte
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasicPrimitiveBuddy.Windows", "..\externals\BasicPrimitiveBuddy\Windows\BasicPrimitiveBuddy.Windows.csproj", "{0FAA1286-7BFA-4765-8B51-62E438CB121D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrameRateCounter.Windows", "..\externals\FrameRateCounter\Windows\FrameRateCounter.Windows.csproj", "{FDC381E6-D593-4F22-A4E5-BCF645682B9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResolutionBuddy.Windows", "..\externals\ResolutionBuddy\Windows\ResolutionBuddy.Windows.csproj", "{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +163,20 @@ Global
 		{0FAA1286-7BFA-4765-8B51-62E438CB121D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0FAA1286-7BFA-4765-8B51-62E438CB121D}.Release|x86.ActiveCfg = Release|x86
 		{0FAA1286-7BFA-4765-8B51-62E438CB121D}.Release|x86.Build.0 = Release|x86
+		{FDC381E6-D593-4F22-A4E5-BCF645682B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDC381E6-D593-4F22-A4E5-BCF645682B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDC381E6-D593-4F22-A4E5-BCF645682B9C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FDC381E6-D593-4F22-A4E5-BCF645682B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDC381E6-D593-4F22-A4E5-BCF645682B9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FDC381E6-D593-4F22-A4E5-BCF645682B9C}.Release|x86.ActiveCfg = Release|Any CPU
+		{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}.Debug|x86.ActiveCfg = Debug|x86
+		{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}.Debug|x86.Build.0 = Debug|x86
+		{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}.Release|x86.ActiveCfg = Release|x86
+		{28342DF0-0089-4A2A-B3D4-6DCD65D6D8E4}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

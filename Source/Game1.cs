@@ -1,5 +1,7 @@
 using FontBuddyLib;
+using FrameRateCounter;
 using Microsoft.Xna.Framework.Graphics;
+using ResolutionBuddy;
 using Vector2Extensions;
 using System.Collections.Generic;
 using GameTimer;
@@ -10,6 +12,7 @@ using FlockBuddy;
 using System;
 using RandomExtensions;
 using BasicPrimitiveBuddy;
+using CollisionBuddy;
 
 namespace FlockBuddyFlockingDemo
 {
@@ -36,9 +39,10 @@ namespace FlockBuddyFlockingDemo
 		Random g_Random = new Random();
 
 		XNABasicPrimitive prim;
-		bool DrawCells = false;
 		bool drawNeighbors = false;
 		bool drawVectors = false;
+
+		//TODO: turn cell space on/off
 
 		#endregion //Members
 
@@ -48,10 +52,18 @@ namespace FlockBuddyFlockingDemo
 		{
 			graphics = new GraphicsDeviceManager(this);
 			graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft;
+			Resolution.Init(ref graphics);
 			Content.RootDirectory = "Content";
 			graphics.PreferredBackBufferWidth = 1024;
 			graphics.PreferredBackBufferHeight = 768;
 			graphics.IsFullScreen = false;
+
+			Resolution.SetDesiredResolution(1280, 720);
+			Resolution.SetScreenResolution(600, 600, false);
+
+			//Add an FPS counter
+			FPSCounter fps = new FPSCounter(this);
+			Components.Add(fps);
 
 			Reset1();
 		}
@@ -61,7 +73,7 @@ namespace FlockBuddyFlockingDemo
 			//create the flock of dudes
 			Dudes = new Flock();
 			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
-			for (int i = 0; i < 50; i++)
+			for (int i = 0; i < 100; i++)
 			{
 				//create a random dude
 				AddDude(g_Random.NextVector2(0.0f, 1024.0f, 0.0f, 768.0f),
@@ -160,6 +172,19 @@ namespace FlockBuddyFlockingDemo
 			AddObstacle(new Vector2(400.0f, 400.0f), 60.0f);
 		}
 
+		protected void ToggleWalls()
+		{
+			//are there any walls?
+			if (Dudes.Walls.Count > 0)
+			{
+				Dudes.Walls.Clear();
+			}
+			else
+			{
+				Dudes.Walls = Line.InsideRect(Resolution.TitleSafeArea);
+			}
+		}
+
 		public void AddDude(Vector2 pos, Vector2 heading, float speed)
 		{
 			heading.Normalize();
@@ -180,7 +205,8 @@ namespace FlockBuddyFlockingDemo
 					EBehaviorType.alignment,
 					EBehaviorType.cohesion,
 					EBehaviorType.separation,
-					EBehaviorType.obstacle_avoidance
+					EBehaviorType.obstacle_avoidance,
+					EBehaviorType.wall_avoidance
 				});
 
 			Dudes.AddDude(dude);
@@ -247,10 +273,10 @@ namespace FlockBuddyFlockingDemo
 				Reset3();
 			}
 
-			//check if the player wants to reset the simulation
+			//check if we shoudl toggle cell space
 			if (CheckKeyDown(m_Input, Keys.X))
 			{
-				DrawCells = !DrawCells;
+				Dudes.UseCellSpace = !Dudes.UseCellSpace;
 			}
 
 			//check if we want to draw the neighbors
@@ -287,16 +313,24 @@ namespace FlockBuddyFlockingDemo
 		{
 			GraphicsDevice.Clear(Color.Gray);
 
-			spriteBatch.Begin();
+#if WINDOWS
+			// Calculate Proper Viewport according to Aspect Ratio
+			Resolution.ResetViewport();
+#endif
 
-			if (DrawCells)
+			spriteBatch.Begin(SpriteSortMode.Deferred,
+			BlendState.AlphaBlend,
+			null, null, null, null,
+			Resolution.TransformationMatrix());
+
+			if (Dudes.UseCellSpace)
 			{
 				Dudes.DrawCells(prim);
 			}
 
 			foreach (var dude in Dudes.Dudes)
 			{
-				dude.Render(prim);
+				dude.Render(prim, Color.White);
 			}
 
 			foreach (var dude in Obstacles)
