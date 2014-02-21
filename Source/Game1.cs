@@ -41,6 +41,7 @@ namespace FlockBuddyFlockingDemo
 		XNABasicPrimitive prim;
 		bool drawNeighbors = false;
 		bool drawVectors = false;
+		bool drawWhiskers = false;
 
 		//TODO: turn cell space on/off
 
@@ -54,12 +55,9 @@ namespace FlockBuddyFlockingDemo
 			graphics.SupportedOrientations = DisplayOrientation.LandscapeLeft;
 			Resolution.Init(ref graphics);
 			Content.RootDirectory = "Content";
-			graphics.PreferredBackBufferWidth = 1024;
-			graphics.PreferredBackBufferHeight = 768;
-			graphics.IsFullScreen = false;
 
 			Resolution.SetDesiredResolution(1280, 720);
-			Resolution.SetScreenResolution(600, 600, false);
+			Resolution.SetScreenResolution(1280, 720, false);
 
 			//Add an FPS counter
 			FPSCounter fps = new FPSCounter(this);
@@ -72,7 +70,7 @@ namespace FlockBuddyFlockingDemo
 		{
 			//create the flock of dudes
 			Dudes = new Flock();
-			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
+			Dudes.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, false, 5, 4);
 			for (int i = 0; i < 100; i++)
 			{
 				//create a random dude
@@ -97,7 +95,7 @@ namespace FlockBuddyFlockingDemo
 		public void Reset1()
 		{
 			Dudes = new Flock();
-			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
+			Dudes.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
 
 			//AddDude(new Vector2(600.0f, 100.0f),
 			//		new Vector2(-0.5f, 1.5f),
@@ -120,7 +118,7 @@ namespace FlockBuddyFlockingDemo
 		public void Reset2()
 		{
 			Dudes = new Flock();
-			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
+			Dudes.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
 
 			AddDude(new Vector2(150.0f, 500.0f),
 					new Vector2(0.0f, -1.0f),
@@ -135,7 +133,7 @@ namespace FlockBuddyFlockingDemo
 		public void Reset3()
 		{
 			Dudes = new Flock();
-			Dudes.SetWorldSize(new Vector2(1024.0f, 768.0f), true, true, 5, 4);
+			Dudes.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
 
 			//going down
 			for (float x = 300.0f; x <= 500.0f; x += 25.0f)
@@ -273,6 +271,11 @@ namespace FlockBuddyFlockingDemo
 				Reset3();
 			}
 
+			if (CheckKeyDown(m_Input, Keys.E))
+			{
+				ToggleWalls();
+			}
+
 			//check if we shoudl toggle cell space
 			if (CheckKeyDown(m_Input, Keys.X))
 			{
@@ -297,6 +300,12 @@ namespace FlockBuddyFlockingDemo
 				Vector2 pos = g_Random.NextVector2(100.0f, 900.0f, 100.0f, 600.0f);
 				float radius = g_Random.NextFloat(50.0f, 200.0f);
 				AddObstacle(pos, radius);
+			}
+
+			//check if we want to draw the wall whiskers
+			if (CheckKeyDown(m_Input, Keys.N))
+			{
+				drawWhiskers = !drawWhiskers;
 			}
 
 			//update the flock
@@ -348,6 +357,14 @@ namespace FlockBuddyFlockingDemo
 			{
 				Dudes.DrawVectors(prim);
 			}
+
+			if (drawWhiskers)
+			{
+				Dudes.DrawWhiskers(prim);
+			}
+
+			//draw the walls
+			Dudes.DrawWalls(prim);
 			
 			spriteBatch.End();
 
