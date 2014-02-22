@@ -298,7 +298,7 @@ namespace FlockBuddyFlockingDemo
 			if (CheckKeyDown(m_Input, Keys.B))
 			{
 				Vector2 pos = g_Random.NextVector2(100.0f, 900.0f, 100.0f, 600.0f);
-				float radius = g_Random.NextFloat(50.0f, 200.0f);
+				float radius = g_Random.NextFloat(150.0f, 250.0f);
 				AddObstacle(pos, radius);
 			}
 
