@@ -70,12 +70,12 @@ namespace FlockBuddyFlockingDemo
 		{
 			//create the flock of dudes
 			Dudes = new Flock();
-			Dudes.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, false, 5, 4);
+			Dudes.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
 			for (int i = 0; i < 100; i++)
 			{
 				//create a random dude
 				AddDude(g_Random.NextVector2(0.0f, 1024.0f, 0.0f, 768.0f),
-					g_Random.NextVector2(-1.0f, 1.0f, -1.0f, 0.50f),
+					g_Random.NextVector2(-1.0f, 1.0f, -1.0f, 1.0f),
 					50.0f + (g_Random.NextFloat() * 50.0f));
 			}
 
