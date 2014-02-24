@@ -80,22 +80,34 @@ namespace FlockBuddyFlockingDemo
 			}
 
 			//create the flock of bad guys
+			BadGuys = new Flock();
+			BadGuys.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
+
+			AddBadGuy(g_Random.NextVector2(0.0f, 1024.0f, 0.0f, 768.0f),
+					g_Random.NextVector2(-1.0f, 1.0f, -1.0f, 1.0f),
+					50.0f + (g_Random.NextFloat() * 50.0f));
 
 			//create the obstacles
 			Obstacles = new List<BaseEntity>();
-			Dudes.Obstacles = Obstacles;
 
 			//set the dudes to run away from bad guys
+			Dudes.Enemies = BadGuys.Dudes;
 
 			//make the bad guys chase the dudes
+			BadGuys.Targets = Dudes.Dudes;
 
 			//make everybody avoid the obstacles
+			Dudes.Obstacles = Obstacles;
+			BadGuys.Obstacles = Obstacles;
 		}
 
 		public void Reset1()
 		{
 			Dudes = new Flock();
 			Dudes.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
+
+			BadGuys = new Flock();
+			BadGuys.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
 
 			//AddDude(new Vector2(600.0f, 100.0f),
 			//		new Vector2(-0.5f, 1.5f),
@@ -124,8 +136,17 @@ namespace FlockBuddyFlockingDemo
 					new Vector2(0.0f, -1.0f),
 					50.0f);
 
+			BadGuys = new Flock();
+			BadGuys.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
+			AddBadGuy(new Vector2(150.0f, 100.0f),
+					new Vector2(0.0f, 1.0f),
+					50.0f);
+
 			Obstacles = new List<BaseEntity>();
 			Dudes.Obstacles = Obstacles;
+			Dudes.Enemies = BadGuys.Dudes;
+			BadGuys.Obstacles = Obstacles;
+			BadGuys.Targets = Dudes.Dudes;
 
 			AddObstacle(new Vector2(200.0f, 300.0f), 60.0f);
 		}
@@ -164,6 +185,9 @@ namespace FlockBuddyFlockingDemo
 						50.0f);
 			}
 
+			BadGuys = new Flock();
+			BadGuys.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
+
 			Obstacles = new List<BaseEntity>();
 			Dudes.Obstacles = Obstacles;
 
@@ -176,10 +200,13 @@ namespace FlockBuddyFlockingDemo
 			if (Dudes.Walls.Count > 0)
 			{
 				Dudes.Walls.Clear();
+				BadGuys.Walls.Clear();
 			}
 			else
 			{
-				Dudes.Walls = Line.InsideRect(Resolution.TitleSafeArea);
+				List<Line> walls = Line.InsideRect(Resolution.TitleSafeArea);
+				Dudes.Walls = walls;
+				BadGuys.Walls = walls;
 			}
 		}
 
@@ -204,10 +231,39 @@ namespace FlockBuddyFlockingDemo
 					EBehaviorType.cohesion,
 					EBehaviorType.separation,
 					EBehaviorType.obstacle_avoidance,
-					EBehaviorType.wall_avoidance
+					EBehaviorType.wall_avoidance,
+					EBehaviorType.evade
 				});
 
 			Dudes.AddDude(dude);
+		}
+
+		public void AddBadGuy(Vector2 pos, Vector2 heading, float speed)
+		{
+			heading.Normalize();
+
+			var dude = new Boid(
+						Dudes,
+						pos,
+						10.0f,
+						heading,
+						speed,
+						1.0f,
+						500.0f,
+						1.0f,
+						100.0f);
+
+			//setup his behaviors
+			dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
+					EBehaviorType.alignment,
+					EBehaviorType.cohesion,
+					EBehaviorType.separation,
+					EBehaviorType.obstacle_avoidance,
+					EBehaviorType.wall_avoidance,
+					EBehaviorType.pursuit
+				});
+
+			BadGuys.AddDude(dude);
 		}
 
 		public void AddObstacle(Vector2 pos, float radius)
@@ -310,6 +366,7 @@ namespace FlockBuddyFlockingDemo
 
 			//update the flock
 			Dudes.Update(gameTime);
+			BadGuys.Update(gameTime);
 
 			base.Update(gameTime);
 		}
@@ -340,6 +397,11 @@ namespace FlockBuddyFlockingDemo
 			foreach (var dude in Dudes.Dudes)
 			{
 				dude.Render(prim, Color.White);
+			}
+
+			foreach (var dude in BadGuys.Dudes)
+			{
+				dude.Render(prim, Color.Red);
 			}
 
 			foreach (var dude in Obstacles)
