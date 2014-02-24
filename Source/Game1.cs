@@ -234,8 +234,6 @@ namespace FlockBuddyFlockingDemo
 					EBehaviorType.wall_avoidance,
 					EBehaviorType.evade
 				});
-
-			Dudes.AddDude(dude);
 		}
 
 		public void AddBadGuy(Vector2 pos, Vector2 heading, float speed)
@@ -243,7 +241,7 @@ namespace FlockBuddyFlockingDemo
 			heading.Normalize();
 
 			var dude = new Boid(
-						Dudes,
+						BadGuys,
 						pos,
 						10.0f,
 						heading,
@@ -262,8 +260,6 @@ namespace FlockBuddyFlockingDemo
 					EBehaviorType.wall_avoidance,
 					EBehaviorType.pursuit
 				});
-
-			BadGuys.AddDude(dude);
 		}
 
 		public void AddObstacle(Vector2 pos, float radius)
