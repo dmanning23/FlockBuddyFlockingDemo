@@ -30,11 +30,13 @@ namespace FlockBuddyFlockingDemo
 		SpriteBatch spriteBatch;
 		private InputState m_Input = new InputState();
 
+		GameClock _timer = new GameClock();
+
 		Flock Dudes { get; set; }
 
 		Flock BadGuys { get; set; }
 
-		List<BaseEntity> Obstacles { get; set; }
+		List<IBaseEntity> Obstacles { get; set; }
 
 		Random g_Random = new Random();
 
@@ -88,7 +90,7 @@ namespace FlockBuddyFlockingDemo
 					50.0f + (g_Random.NextFloat() * 50.0f));
 
 			//create the obstacles
-			Obstacles = new List<BaseEntity>();
+			Obstacles = new List<IBaseEntity>();
 
 			//set the dudes to run away from bad guys
 			Dudes.Enemies = BadGuys.Dudes;
@@ -121,7 +123,7 @@ namespace FlockBuddyFlockingDemo
 					new Vector2(1.0f, 0.0f),
 					50.0f);
 
-			Obstacles = new List<BaseEntity>();
+			Obstacles = new List<IBaseEntity>();
 			Dudes.Obstacles = Obstacles;
 
 			AddObstacle(new Vector2(400.0f, 300.0f), 60.0f);
@@ -142,7 +144,7 @@ namespace FlockBuddyFlockingDemo
 					new Vector2(0.0f, 1.0f),
 					50.0f);
 
-			Obstacles = new List<BaseEntity>();
+			Obstacles = new List<IBaseEntity>();
 			Dudes.Obstacles = Obstacles;
 			Dudes.Enemies = BadGuys.Dudes;
 			BadGuys.Obstacles = Obstacles;
@@ -188,7 +190,7 @@ namespace FlockBuddyFlockingDemo
 			BadGuys = new Flock();
 			BadGuys.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height), true, true, 5, 4);
 
-			Obstacles = new List<BaseEntity>();
+			Obstacles = new List<IBaseEntity>();
 			Dudes.Obstacles = Obstacles;
 
 			AddObstacle(new Vector2(400.0f, 400.0f), 60.0f);
@@ -296,6 +298,8 @@ namespace FlockBuddyFlockingDemo
 		/// <param name="gameTime">Provides a snapshot of timing values.</param>
 		protected override void Update(GameTime gameTime)
 		{
+			_timer.Update(gameTime);
+
 			// Allows the game to exit
 			if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) ||
 				Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -361,8 +365,8 @@ namespace FlockBuddyFlockingDemo
 			}
 
 			//update the flock
-			Dudes.Update(gameTime);
-			BadGuys.Update(gameTime);
+			Dudes.Update(_timer);
+			BadGuys.Update(_timer);
 
 			base.Update(gameTime);
 		}
@@ -402,13 +406,15 @@ namespace FlockBuddyFlockingDemo
 
 			foreach (var dude in Obstacles)
 			{
-				dude.DrawPhysics(prim, Color.White);
+				var entity = dude as BaseEntity;
+				entity.DrawPhysics(prim, Color.White);
 			}
 
 			//draw neighbors?
 			if (drawNeighbors)
 			{
-				Dudes.Dudes[0].DrawNeigbors(prim);
+				var mover = Dudes.Dudes[0] as Mover;
+				mover.DrawNeigbors(prim);
 			}
 
 			if (drawVectors)
