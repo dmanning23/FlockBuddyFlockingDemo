@@ -221,11 +221,7 @@ namespace FlockBuddyFlockingDemo
 						pos,
 						10.0f,
 						heading,
-						speed,
-						1.0f,
-						500.0f,
-						1.0f,
-						100.0f);
+						speed);
 
 			//setup his behaviors
 			dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
@@ -247,11 +243,7 @@ namespace FlockBuddyFlockingDemo
 						pos,
 						10.0f,
 						heading,
-						speed,
-						1.0f,
-						500.0f,
-						1.0f,
-						100.0f);
+						speed);
 
 			//setup his behaviors
 			dude.Behaviors.ActivateBehaviors(new EBehaviorType[] {
