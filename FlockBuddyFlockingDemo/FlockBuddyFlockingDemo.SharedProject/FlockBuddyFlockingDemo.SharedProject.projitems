@@ -19,7 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)FlocksCollection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Game1.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\AddBehaviorMessageBox.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Screens\BaseFlockingScreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\BaseTab.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\BehaviorsScreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\BoidsScreen.cs" />

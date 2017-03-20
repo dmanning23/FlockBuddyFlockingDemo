@@ -1,9 +1,6 @@
 ﻿using FlockBuddy;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FlockBuddyFlockingDemo
 {
@@ -13,7 +10,6 @@ namespace FlockBuddyFlockingDemo
 	public class BoidsScreen : BaseTab
 	{
 		readonly FlockManager _flock;
-		ILabel _numBoids;
 
 		public BoidsScreen(FlockManager flock) : base("BoidsScreen")
 		{
@@ -27,15 +23,90 @@ namespace FlockBuddyFlockingDemo
 			//Add the header
 			AddHeader(_flock);
 
-			//add the Num Boids control
-			AddNumBoids();
+			var radius = AddBoidOption("Radius", _flock.BoidRadius);
+			radius.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidRadius = radius.Number;
+			};
+
+			var mass = AddBoidOption("Mass", _flock.BoidMass);
+			mass.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidMass = mass.Number;
+			};
+
+			var minSpeed = AddBoidOption("Min Speed", _flock.BoidMinSpeed);
+			minSpeed.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidMinSpeed = minSpeed.Number;
+			};
+
+			var walkSpeed = AddBoidOption("Walk Speed", _flock.BoidWalkSpeed);
+			walkSpeed.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidWalkSpeed = walkSpeed.Number;
+			};
+
+			var maxSpeed = AddBoidOption("Max Speed", _flock.BoidMaxSpeed);
+			maxSpeed.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidMaxSpeed = maxSpeed.Number;
+			};
+
+			var maxTurnRate = AddBoidOption("Max Turn Rate", _flock.BoidMaxTurnRate);
+			maxTurnRate.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidMaxTurnRate = maxTurnRate.Number;
+			};
+
+			var maxForce = AddBoidOption("Max Force", _flock.BoidMaxForce);
+			maxForce.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidMaxForce = maxForce.Number;
+			};
+
+			var queryRadius0 = AddBoidOption("Neighbor Query Radius", _flock.BoidNeighborQueryRadius);
+			queryRadius0.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidNeighborQueryRadius = queryRadius0.Number;
+			};
+
+			var queryRadius1 = AddBoidOption("Predator Query Radius", _flock.BoidPredatorQueryRadius);
+			queryRadius1.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidPredatorQueryRadius= queryRadius1.Number;
+			};
+
+			var queryRadius2 = AddBoidOption("Prey Query Radius", _flock.BoidPreyQueryRadius);
+			queryRadius2.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidPreyQueryRadius = queryRadius2.Number;
+			};
+
+			var queryRadius3 = AddBoidOption("Vip Query Radius", _flock.BoidVipQueryRadius);
+			queryRadius3.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidVipQueryRadius = queryRadius3.Number;
+			};
+
+			var queryRadius4 = AddBoidOption("Wall Query Radius", _flock.BoidWallQueryRadius);
+			queryRadius4.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidWallQueryRadius = queryRadius4.Number;
+			};
+
+			var retargetTime = AddBoidOption("Retarget Time", _flock.BoidRetargetTime);
+			retargetTime.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidRetargetTime = retargetTime.Number;
+			};
 
 			AddItem(ToolStack);
 		}
 
-		private void AddNumBoids()
+		private NumEdit AddBoidOption(string option, float current)
 		{
-			var flockButtons = new StackLayout(StackAlignment.Left)
+			var boidOptionLayout = new StackLayout(StackAlignment.Left)
 			{
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top
@@ -43,89 +114,46 @@ namespace FlockBuddyFlockingDemo
 
 			int sizeDelta = 360;
 
-			//add a subtract button
-			var removeButton = new RelativeLayoutButton()
+			var button = new RelativeLayout()
 			{
-				Size = new Vector2(32f, 32f),
+				Size = new Vector2(200f, 32f),
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
-				HasOutline = true
+				HasOutline = false,
 			};
-			removeButton.AddItem(new Label("-", FontSize.Small)
-			{
-				Horizontal = HorizontalAlignment.Center,
-				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
-			});
-			removeButton.OnClick += (obj, e) =>
-			{
-				_flock.RemoveBoid();
-				_numBoids.Text = _flock.Flock.Boids.Count.ToString();
-			};
-			flockButtons.AddItem(removeButton);
-			sizeDelta -= removeButton.Rect.Width;
-
-			//add a shim
-			var shim = new Shim()
-			{
-				Size = new Vector2(16f, 16f)
-			};
-			flockButtons.AddItem(shim);
-			sizeDelta -= shim.Rect.Width;
-
-			//add the "add" button
-			var addButton = new RelativeLayoutButton()
-			{
-				Size = new Vector2(32f, 32f),
-				Horizontal = HorizontalAlignment.Left,
-				Vertical = VerticalAlignment.Top,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
-				HasOutline = true
-			};
-			addButton.AddItem(new Label("+", FontSize.Small)
-			{
-				Horizontal = HorizontalAlignment.Center,
-				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
-			});
-			addButton.OnClick += (obj, e) =>
-			{
-				_flock.AddBoid();
-				_numBoids.Text = _flock.Flock.Boids.Count.ToString();
-			};
-			flockButtons.AddItem(addButton);
-			sizeDelta -= addButton.Rect.Width;
-
-			//add another shim
-			shim = new Shim()
-			{
-				Size = new Vector2(16f, 16f)
-			};
-			flockButtons.InsertItemBefore(shim, addButton);
-			sizeDelta -= shim.Rect.Width;
-
-			//add a label with the number of boids
-			var relLayout = new RelativeLayout()
-			{
-				Size = new Vector2(sizeDelta, 32f),
-				Horizontal = HorizontalAlignment.Left,
-				Vertical = VerticalAlignment.Top,
-				HasOutline = false
-			};
-			_numBoids = new Label(_flock.Flock.Boids.Count.ToString(), FontSize.Small)
+			button.AddItem(new Label(option.ToString(), FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
 				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
 				Highlightable = false
-			};
-			relLayout.AddItem(_numBoids);
-			flockButtons.InsertItemBefore(relLayout, shim);
-			sizeDelta -= relLayout.Rect.Width;
+			});
+			boidOptionLayout.AddItem(button);
+			sizeDelta -= button.Rect.Width;
+			
+			//add a num edit to change the weight
+			var weight = new NumEdit(FontSize.Small)
+			{
+				Size = new Vector2(sizeDelta, 32f),
+				Horizontal = HorizontalAlignment.Left,
+				Vertical = VerticalAlignment.Top,
+				HasOutline = true,
+				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				Number = current,
 
-			ToolStack.AddItem(flockButtons);
-			AddShim();
+			};
+			boidOptionLayout.AddItem(weight);
+			ToolStack.AddItem(boidOptionLayout);
+
+			//add a shim
+			ToolStack.AddItem(new Shim()
+			{
+				Size = new Vector2(16f, 16f),
+				Horizontal = HorizontalAlignment.Left,
+				Vertical = VerticalAlignment.Top,
+			});
+
+			return weight;
 		}
 	}
 }
