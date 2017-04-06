@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using ResolutionBuddy;
 using System;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
 	public class WallsDropdown : Dropdown<DefaultWalls>
 	{

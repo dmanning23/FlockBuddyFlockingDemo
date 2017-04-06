@@ -1,16 +1,20 @@
-﻿using GameTimer;
+﻿using FlockBuddy;
+using GameTimer;
 using HadoukInput;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
+using PrimitiveBuddy;
+using System.Collections.Generic;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
 	public class DisplayScreen : Screen, IGameScreen
 	{
 		GameClock FlockTimer { get; set; }
-		FlocksCollection Flocks { get; set; }
+		List<FlockManager> Flocks { get; set; }
+		Primitive _prim;
 
-		public DisplayScreen(FlocksCollection flocks)
+		public DisplayScreen(List<FlockManager> flocks)
 		{
 			CoveredByOtherScreens = false;
 			CoverOtherScreens = false;
@@ -19,12 +23,22 @@ namespace FlockBuddyFlockingDemo
 			FlockTimer = new GameClock();
 		}
 
+		public override void LoadContent()
+		{
+			base.LoadContent();
+
+			_prim = new Primitive(ScreenManager.Game.GraphicsDevice, ScreenManager.SpriteBatch);
+		}
+
 		public override void Update(GameTime gameTime, bool otherWindowHasFocus, bool covered)
 		{
 			base.Update(gameTime, otherWindowHasFocus, covered);
 
 			FlockTimer.Update(gameTime);
-			Flocks.Update(FlockTimer);
+			foreach (var flock in Flocks)
+			{
+				flock.Flock.Update(FlockTimer);
+			}
 		}
 
 		public override void Draw(GameTime gameTime)
@@ -32,7 +46,12 @@ namespace FlockBuddyFlockingDemo
 			base.Draw(gameTime);
 
 			ScreenManager.SpriteBatchBegin();
-			Flocks.Draw();
+
+			foreach (var flock in Flocks)
+			{
+				flock.Flock.Draw(_prim, flock.DebugColor);
+			}
+
 			ScreenManager.SpriteBatchEnd();
 		}
 

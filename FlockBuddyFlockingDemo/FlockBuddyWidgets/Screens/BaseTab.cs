@@ -2,7 +2,7 @@
 using MenuBuddy;
 using Microsoft.Xna.Framework;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
 	public abstract class BaseTab : WidgetScreen
 	{
@@ -90,7 +90,7 @@ namespace FlockBuddyFlockingDemo
 				Vertical = VerticalAlignment.Top,
 				HasOutline = false
 			};
-			relLayout.AddItem(new Label(flock.DebugColor.ToString(), FontSize.Small)
+			relLayout.AddItem(new TextEdit(flock.Flock.Name, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
