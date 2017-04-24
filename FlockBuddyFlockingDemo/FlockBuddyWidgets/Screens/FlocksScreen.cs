@@ -2,18 +2,19 @@
 using MenuBuddy;
 using Microsoft.Xna.Framework;
 using ResolutionBuddy;
+using System.Collections.Generic;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
 	/// <summary>
 	/// This is the screen that displays all the flocks
 	/// </summary>
 	public class FlocksScreen : BaseTab
 	{
-		FlocksCollection Flocks { get; set; }
+		List<FlockManager> Flocks { get; set; }
 		IButton _addFlock;
 
-		public FlocksScreen(FlocksCollection flocks) : base("FlocksScreen")
+		public FlocksScreen(List<FlockManager> flocks) : base("FlocksScreen")
 		{
 			Flocks = flocks;
 		}
@@ -23,7 +24,7 @@ namespace FlockBuddyFlockingDemo
 			base.LoadContent();
 
 			//add a button for each flock in the system
-			foreach (var flock in Flocks.Flocks)
+			foreach (var flock in Flocks)
 			{
 				AddFlockButton(flock);
 			}
@@ -49,10 +50,8 @@ namespace FlockBuddyFlockingDemo
 		public void AddFlock()
 		{
 			//create the flock
-			var flockManager = new FlockManager(new Flock()) {
-				DebugColor = Flocks.GetColor(Flocks.Flocks.Count)
-			};
-			Flocks.Flocks.Add(flockManager);
+			var flockManager = new FlockManager(new Flock());
+			Flocks.Add(flockManager);
 
 			flockManager.Flock.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height));
 
@@ -65,9 +64,9 @@ namespace FlockBuddyFlockingDemo
 		public void RemoveFlock(FlockManager flock)
 		{
 			//remove from the flock collection
-			Flocks.Flocks.Remove(flock);
+			Flocks.Remove(flock);
 
-			foreach (var flockManager in Flocks.Flocks)
+			foreach (var flockManager in Flocks)
 			{
 				flockManager.Flock.RemoveFlock(flock.Flock);
 			}

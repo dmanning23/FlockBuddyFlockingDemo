@@ -2,7 +2,7 @@
 using MenuBuddy;
 using Microsoft.Xna.Framework;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
 	/// <summary>
 	/// This 

@@ -13,6 +13,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MenuBuddy.SharedProject", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CellSpacePartition.SharedProject", "..\..\CellSpacePartition\CellSpacePartition\CellSpacePartition.SharedProject\CellSpacePartition.SharedProject.shproj", "{E8D618DB-6B0F-4F24-89C8-90531418853A}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FlockBuddyWidgets", "FlockBuddyWidgets\FlockBuddyWidgets.shproj", "{E4FEDB82-01F4-48C5-B158-5459DD33BB44}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\MenuBuddy\MenuBuddy\MenuBuddy.SharedProject\MenuBuddy.SharedProject.projitems*{0d2b86ea-9261-4f94-87a8-10eeee72ec22}*SharedItemsImports = 13
@@ -20,8 +22,10 @@ Global
 		..\..\FlockBuddy\FlockBuddy\FlockBuddy.SharedProject\FlockBuddy.SharedProject.projitems*{932de7a2-c12e-4d94-89ce-247b762c7ee8}*SharedItemsImports = 13
 		..\..\CellSpacePartition\CellSpacePartition\CellSpacePartition.SharedProject\CellSpacePartition.SharedProject.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
 		FlockBuddyFlockingDemo.SharedProject\FlockBuddyFlockingDemo.SharedProject.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
+		FlockBuddyWidgets\FlockBuddyWidgets.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
 		..\..\FlockBuddy\FlockBuddy\FlockBuddy.SharedProject\FlockBuddy.SharedProject.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
 		..\..\MenuBuddy\MenuBuddy\MenuBuddy.SharedProject\MenuBuddy.SharedProject.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
+		FlockBuddyWidgets\FlockBuddyWidgets.projitems*{e4fedb82-01f4-48c5-b158-5459dd33bb44}*SharedItemsImports = 13
 		..\..\CellSpacePartition\CellSpacePartition\CellSpacePartition.SharedProject\CellSpacePartition.SharedProject.projitems*{e8d618db-6b0f-4f24-89c8-90531418853a}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

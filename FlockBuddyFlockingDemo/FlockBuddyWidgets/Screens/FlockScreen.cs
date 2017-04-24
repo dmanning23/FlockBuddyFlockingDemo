@@ -5,16 +5,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
 	public class FlockScreen : BaseTab
 	{
-		FlocksCollection Flocks { get; set; }
+		List<FlockManager> Flocks { get; set; }
 		FlockManager Flock { get; set; }
 
 		ILabel _numBoids;
 
-		public FlockScreen(FlockManager flock, FlocksCollection flocks) : base("FlockScreen")
+		public FlockScreen(FlockManager flock, List<FlockManager> flocks) : base("FlockScreen")
 		{
 			Flocks = flocks;
 			Flock = flock;

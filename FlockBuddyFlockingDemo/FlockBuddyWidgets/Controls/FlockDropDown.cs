@@ -3,19 +3,20 @@ using MenuBuddy;
 using Microsoft.Xna.Framework;
 using ResolutionBuddy;
 using System;
+using System.Collections.Generic;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
 	public class FlockDropdown : Dropdown<IFlock>
 	{
-		FlocksCollection _flocks;
+		List<FlockManager> _flocks;
 		protected FlockManager _flock;
 
-		public FlockDropdown(FlockManager flock, FlocksCollection flocks)
+		public FlockDropdown(FlockManager flock, List<FlockManager> flocks)
 		{
 			_flocks = flocks;
 			_flock = flock;
-			foreach (var flockManager in flocks.Flocks)
+			foreach (var flockManager in flocks)
 			{
 				if (flockManager != flock)
 				{

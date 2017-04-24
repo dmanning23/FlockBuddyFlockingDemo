@@ -3,7 +3,7 @@ using MenuBuddy;
 using Microsoft.Xna.Framework;
 using System;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
 	public class AddBehaviorMessageBox : MessageBoxScreen
 	{

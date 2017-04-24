@@ -1,12 +1,15 @@
+using FlockBuddy;
+using FlockBuddyWidgets;
 using FrameRateCounter;
 using InputHelper;
 using MenuBuddy;
+using System.Collections.Generic;
 
 namespace FlockBuddyFlockingDemo
 {
 	public class Game1 : MouseGame
 	{
-		FlocksCollection Flocks { get; set; }
+		List<FlockManager> _flocks;
 
 		public Game1()
 		{
@@ -16,13 +19,13 @@ namespace FlockBuddyFlockingDemo
 			//add the fps counter
 			var fps = new FpsCounter(this, @"Fonts\ArialBlack14");
 			fps.DrawOrder = 100;
-			Flocks = new FlocksCollection();
+
+			_flocks = new List<FlockManager>();
 		}
 
 		protected override void LoadContent()
 		{
 			base.LoadContent();
-			Flocks.LoadContent(GraphicsDevice, ScreenManager.SpriteBatch);
 		}
 
 		protected override void InitStyles()
@@ -38,7 +41,7 @@ namespace FlockBuddyFlockingDemo
 
 		public override IScreen[] GetMainMenuScreenStack()
 		{
-			return new IScreen[] { new DisplayScreen(Flocks), new FlocksScreen(Flocks) };
+			return new IScreen[] { new DisplayScreen(_flocks), new FlocksScreen(_flocks) };
 		}
 	}
 }

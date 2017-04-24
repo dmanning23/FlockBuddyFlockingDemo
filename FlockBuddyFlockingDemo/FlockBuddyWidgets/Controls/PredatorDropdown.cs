@@ -1,14 +1,15 @@
 ﻿using FlockBuddy;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
-namespace FlockBuddyFlockingDemo
+namespace FlockBuddyWidgets
 {
-	class ProtectDropdown : FlockDropdown
+	class PredatorDropdown : FlockDropdown
 	{
-		public ProtectDropdown(FlockManager flock, FlocksCollection flocks) : base(flock, flocks)
+		public PredatorDropdown(FlockManager flock, List<FlockManager> flocks) : base(flock, flocks)
 		{
-			SelectedItem = flock.Flock.Vips;
+			SelectedItem = flock.Flock.Predators;
 		}
 
 		protected override DropdownItem<IFlock> AddFlock(IFlock flock, Color color)
@@ -17,7 +18,7 @@ namespace FlockBuddyFlockingDemo
 
 			flockWidget.OnClick += (obj, e) =>
 			{
-				_flock.Flock.Vips = flock;
+				_flock.Flock.Predators = flock;
 			};
 
 			return flockWidget;
