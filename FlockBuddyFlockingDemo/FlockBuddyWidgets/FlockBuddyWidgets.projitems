@@ -11,16 +11,14 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)Controls\BehaviorControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\FlockControl.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\FlockDropDown.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\PredatorDropdown.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\PreyDropdown.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Controls\ProtectDropdown.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Controls\FlockGroupControl.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\WallsDropdown.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\AddBehaviorMessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\BaseTab.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\BehaviorsScreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\BoidsScreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\DisplayScreen.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Screens\FlockGroupsMessageBox.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\FlockScreen.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Screens\FlocksScreen.cs" />
   </ItemGroup>
