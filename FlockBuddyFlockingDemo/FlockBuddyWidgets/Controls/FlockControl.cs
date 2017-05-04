@@ -36,7 +36,7 @@ namespace FlockBuddyWidgets
 				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
 				HasOutline = true
 			};
-			button.AddItem(new TextEdit(Flock.Flock.Name, FontSize.Small)
+			button.AddItem(new TextEdit(Flock.Name, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,

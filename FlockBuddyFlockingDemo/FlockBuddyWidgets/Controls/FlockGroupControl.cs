@@ -72,7 +72,7 @@ namespace FlockBuddyWidgets
 			};
 
 			//add the label if this is the header
-			var label = new Label(IsHeader ? "Flock Name" : Flock.Flock.Name, FontSize.Small)
+			var label = new Label(IsHeader ? "Flock Name" : Flock.Name, FontSize.Small)
 			{
 				Vertical = VerticalAlignment.Center,
 				Horizontal = HorizontalAlignment.Left,

@@ -90,7 +90,7 @@ namespace FlockBuddyWidgets
 				Vertical = VerticalAlignment.Top,
 				HasOutline = false
 			};
-			relLayout.AddItem(new TextEdit(flock.Flock.Name, FontSize.Small)
+			relLayout.AddItem(new TextEdit(flock.Name, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
