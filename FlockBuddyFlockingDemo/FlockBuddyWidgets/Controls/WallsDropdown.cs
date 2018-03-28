@@ -10,17 +10,17 @@ namespace FlockBuddyWidgets
 	{
 		FlockManager _flock;
 
-		public WallsDropdown(FlockManager flock)
+		public WallsDropdown(FlockManager flock, IScreen screen) : base(screen)
 		{
 			_flock = flock;
 			foreach (DefaultWalls wall in Enum.GetValues(typeof(DefaultWalls)))
 			{
-				AddWall(wall);
+				AddWall(wall, screen);
 			}
 			SelectedItem = _flock.Walls;
 		}
 
-		private void AddWall(DefaultWalls wall)
+		private void AddWall(DefaultWalls wall, IScreen screen)
 		{
 			//add this dude
 			var dropitem = new DropdownItem<DefaultWalls>(wall, this)
@@ -30,7 +30,7 @@ namespace FlockBuddyWidgets
 				Size = new Vector2(350f, 48f)
 			};
 
-			var label = new Label(wall.ToString(), FontSize.Small)
+			var label = new Label(wall.ToString(), screen.Content, FontSize.Small)
 			{
 				Vertical = VerticalAlignment.Center,
 				Horizontal = HorizontalAlignment.Center
@@ -44,5 +44,5 @@ namespace FlockBuddyWidgets
 				_flock.AddDefaultWalls(wall, Resolution.ScreenArea);
 			};
 		}
-    }
+	}
 }

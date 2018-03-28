@@ -43,13 +43,13 @@ namespace FlockBuddyWidgets
 			ControlStack.AddItem(new Shim() { Size = new Vector2(0, 16f) });
 
 			//Add the headers to the page
-			ControlStack.AddItem(new FlockGroupControl(null, null, true));
+			ControlStack.AddItem(new FlockGroupControl(null, null, true, this));
 			ControlStack.AddItem(new Shim() { Size = new Vector2(0, 8f) });
 
 			//populate the stack layout
 			foreach (var flock in Flocks)
 			{
-				var groupControl = new FlockGroupControl(Target, flock, false);
+				var groupControl = new FlockGroupControl(Target, flock, false, this);
 				ControlStack.AddItem(groupControl);
 				FlockControls.Add(groupControl);
 			}

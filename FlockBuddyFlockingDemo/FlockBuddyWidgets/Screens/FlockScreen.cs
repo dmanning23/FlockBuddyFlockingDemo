@@ -65,14 +65,14 @@ namespace FlockBuddyWidgets
 				Size = new Vector2(32f, 32f),
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				HasOutline = true
 			};
-			removeButton.AddItem(new Label("-", FontSize.Small)
+			removeButton.AddItem(new Label("-", Content, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 			});
 			removeButton.OnClick += (obj, e) =>
 			{
@@ -96,14 +96,14 @@ namespace FlockBuddyWidgets
 				Size = new Vector2(32f, 32f),
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				HasOutline = true
 			};
-			addButton.AddItem(new Label("+", FontSize.Small)
+			addButton.AddItem(new Label("+", Content, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 			});
 			addButton.OnClick += (obj, e) =>
 			{
@@ -129,11 +129,11 @@ namespace FlockBuddyWidgets
 				Vertical = VerticalAlignment.Top,
 				HasOutline = false
 			};
-			_numBoids = new Label(Flock.Flock.Boids.Count.ToString(), FontSize.Small)
+			_numBoids = new Label(Flock.Flock.Boids.Count.ToString(), Content, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				Highlightable = false
 			};
 			relLayout.AddItem(_numBoids);

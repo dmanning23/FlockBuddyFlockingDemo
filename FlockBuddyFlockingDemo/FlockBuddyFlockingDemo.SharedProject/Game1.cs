@@ -17,7 +17,7 @@ namespace FlockBuddyFlockingDemo
 			debug.DrawOrder = 1000;
 
 			//add the fps counter
-			var fps = new FpsCounter(this, @"Fonts\ArialBlack14");
+			var fps = new FpsCounter(this, @"Content\Fonts\ArialBlack14");
 			fps.DrawOrder = 100;
 
 			_flocks = new List<FlockManager>();

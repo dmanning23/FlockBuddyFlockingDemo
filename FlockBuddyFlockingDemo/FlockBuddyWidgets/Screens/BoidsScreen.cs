@@ -121,24 +121,24 @@ namespace FlockBuddyWidgets
 				Vertical = VerticalAlignment.Top,
 				HasOutline = false,
 			};
-			button.AddItem(new Label(option.ToString(), FontSize.Small)
+			button.AddItem(new Label(option.ToString(), Content, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				Highlightable = false
 			});
 			boidOptionLayout.AddItem(button);
 			sizeDelta -= button.Rect.Width;
 			
 			//add a num edit to change the weight
-			var weight = new NumEdit(FontSize.Small)
+			var weight = new NumEdit(Content, FontSize.Small)
 			{
 				Size = new Vector2(sizeDelta, 32f),
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top,
 				HasOutline = true,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				Number = current,
 
 			};

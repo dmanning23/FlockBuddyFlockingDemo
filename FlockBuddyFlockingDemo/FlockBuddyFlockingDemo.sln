@@ -1,32 +1,20 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FlockBuddy.SharedProject", "..\..\FlockBuddy\FlockBuddy\FlockBuddy.SharedProject\FlockBuddy.SharedProject.shproj", "{932DE7A2-C12E-4D94-89CE-247B762C7EE8}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlockBuddyFlockingDemo.DesktopGL", "FlockBuddyFlockingDemo.DektopGL\FlockBuddyFlockingDemo.DesktopGL.csproj", "{A4DDB31E-F99A-4558-9267-6027B1544109}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlockBuddyFlockingDemo.WindowsDX", "FlockBuddyFlockingDemo.WindowsDX\FlockBuddyFlockingDemo.WindowsDX.csproj", "{A4DDB31E-F99A-4558-9267-6027B1544109}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FlockBuddyFlockingDemo.SharedProject", "FlockBuddyFlockingDemo.SharedProject\FlockBuddyFlockingDemo.SharedProject.shproj", "{5EAB8C3E-F049-4D56-A153-C6AABE9ECE69}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "MenuBuddy.SharedProject", "..\..\MenuBuddy\MenuBuddy\MenuBuddy.SharedProject\MenuBuddy.SharedProject.shproj", "{0D2B86EA-9261-4F94-87A8-10EEEE72EC22}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "CellSpacePartition.SharedProject", "..\..\CellSpacePartition\CellSpacePartition\CellSpacePartition.SharedProject\CellSpacePartition.SharedProject.shproj", "{E8D618DB-6B0F-4F24-89C8-90531418853A}"
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FlockBuddyWidgets", "FlockBuddyWidgets\FlockBuddyWidgets.shproj", "{E4FEDB82-01F4-48C5-B158-5459DD33BB44}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		..\..\MenuBuddy\MenuBuddy\MenuBuddy.SharedProject\MenuBuddy.SharedProject.projitems*{0d2b86ea-9261-4f94-87a8-10eeee72ec22}*SharedItemsImports = 13
 		FlockBuddyFlockingDemo.SharedProject\FlockBuddyFlockingDemo.SharedProject.projitems*{5eab8c3e-f049-4d56-a153-c6aabe9ece69}*SharedItemsImports = 13
-		..\..\FlockBuddy\FlockBuddy\FlockBuddy.SharedProject\FlockBuddy.SharedProject.projitems*{932de7a2-c12e-4d94-89ce-247b762c7ee8}*SharedItemsImports = 13
-		..\..\CellSpacePartition\CellSpacePartition\CellSpacePartition.SharedProject\CellSpacePartition.SharedProject.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
 		FlockBuddyFlockingDemo.SharedProject\FlockBuddyFlockingDemo.SharedProject.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
 		FlockBuddyWidgets\FlockBuddyWidgets.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
-		..\..\FlockBuddy\FlockBuddy\FlockBuddy.SharedProject\FlockBuddy.SharedProject.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
-		..\..\MenuBuddy\MenuBuddy\MenuBuddy.SharedProject\MenuBuddy.SharedProject.projitems*{a4ddb31e-f99a-4558-9267-6027b1544109}*SharedItemsImports = 4
 		FlockBuddyWidgets\FlockBuddyWidgets.projitems*{e4fedb82-01f4-48c5-b158-5459dd33bb44}*SharedItemsImports = 13
-		..\..\CellSpacePartition\CellSpacePartition\CellSpacePartition.SharedProject\CellSpacePartition.SharedProject.projitems*{e8d618db-6b0f-4f24-89c8-90531418853a}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,8 +23,8 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A4DDB31E-F99A-4558-9267-6027B1544109}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{A4DDB31E-F99A-4558-9267-6027B1544109}.Debug|Any CPU.Build.0 = Debug|x86
+		{A4DDB31E-F99A-4558-9267-6027B1544109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4DDB31E-F99A-4558-9267-6027B1544109}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A4DDB31E-F99A-4558-9267-6027B1544109}.Debug|x86.ActiveCfg = Debug|x86
 		{A4DDB31E-F99A-4558-9267-6027B1544109}.Debug|x86.Build.0 = Debug|x86
 		{A4DDB31E-F99A-4558-9267-6027B1544109}.Release|Any CPU.ActiveCfg = Release|x86
@@ -45,5 +33,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64A05D45-C70F-49C2-BB6F-AD65D55E5006}
 	EndGlobalSection
 EndGlobal

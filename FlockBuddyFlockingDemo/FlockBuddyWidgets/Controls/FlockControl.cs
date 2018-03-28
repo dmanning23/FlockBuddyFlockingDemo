@@ -33,14 +33,14 @@ namespace FlockBuddyWidgets
 				Size = new Vector2(256f, 32f),
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				HasOutline = true
 			};
-			button.AddItem(new TextEdit(Flock.Name, FontSize.Small)
+			button.AddItem(new TextEdit(Flock.Name, flocksScreen.Content, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				TextColor = Flock.DebugColor
 			});
 			flockButtons.AddItem(button);
@@ -68,14 +68,14 @@ namespace FlockBuddyWidgets
 				Size = new Vector2(sizeDelta, 32f),
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				HasOutline = true
 			};
-			removeButton.AddItem(new Label("X", FontSize.Small)
+			removeButton.AddItem(new Label("X", flocksScreen.Content, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight)
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight)
 			});
 			flockButtons.AddItem(removeButton);
 			sizeDelta -= removeButton.Rect.Width;

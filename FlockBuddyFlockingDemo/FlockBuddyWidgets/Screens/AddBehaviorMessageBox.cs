@@ -26,7 +26,7 @@ namespace FlockBuddyWidgets
 			ControlStack.AddItem(new Shim() { Size = new Vector2(0, 16f) });
 
 			//create the dropdown
-			_dropdown = new Dropdown<EBehaviorType>()
+			_dropdown = new Dropdown<EBehaviorType>(this)
 			{
 				Size = new Vector2(768f, 32f),
 				Horizontal = HorizontalAlignment.Center,
@@ -46,7 +46,7 @@ namespace FlockBuddyWidgets
 						Size = new Vector2(768f, 32f)
 					};
 
-					var label = new Label(behavior.ToString(), FontSize.Small)
+					var label = new Label(behavior.ToString(), Content, FontSize.Small)
 					{
 						Vertical = VerticalAlignment.Center,
 						Horizontal = HorizontalAlignment.Center,

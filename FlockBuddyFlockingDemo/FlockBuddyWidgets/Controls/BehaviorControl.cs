@@ -31,11 +31,11 @@ namespace FlockBuddyWidgets
 				Vertical = VerticalAlignment.Top,
 				HasOutline = false,
 			};
-			button.AddItem(new Label(Behavior.ToString(), FontSize.Small)
+			button.AddItem(new Label(Behavior.ToString(), behaviorScreen.Content, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				Highlightable = false
 			});
 			AddItem(button);
@@ -52,13 +52,13 @@ namespace FlockBuddyWidgets
 			sizeDelta -= shim.Rect.Width;
 
 			//add a num edit to change the weight
-			var weight = new NumEdit(FontSize.Small)
+			var weight = new NumEdit(behaviorScreen.Content, FontSize.Small)
 			{
 				Size = new Vector2(64f, 32f),
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top,
 				HasOutline = true,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				Number = Flock.GetBehaviorWeight(Behavior),
 
 			};
@@ -85,14 +85,14 @@ namespace FlockBuddyWidgets
 				Size = new Vector2(sizeDelta, 32f),
 				Horizontal = HorizontalAlignment.Left,
 				Vertical = VerticalAlignment.Top,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight),
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight),
 				HasOutline = true
 			};
-			removeButton.AddItem(new Label("X", FontSize.Small)
+			removeButton.AddItem(new Label("X", behaviorScreen.Content, FontSize.Small)
 			{
 				Horizontal = HorizontalAlignment.Center,
 				Vertical = VerticalAlignment.Center,
-				Transition = new WipeTransitionObject(TransitionWipeType.PopRight)
+				TransitionObject = new WipeTransitionObject(TransitionWipeType.PopRight)
 			});
 			AddItem(removeButton);
 			sizeDelta -= removeButton.Rect.Width;
