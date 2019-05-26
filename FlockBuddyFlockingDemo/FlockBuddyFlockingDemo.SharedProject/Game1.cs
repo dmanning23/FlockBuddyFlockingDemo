@@ -31,6 +31,9 @@ namespace FlockBuddyFlockingDemo
 		protected override void InitStyles()
 		{
 			StyleSheet.SmallFontResource = @"Fonts\ArialBlack10";
+			StyleSheet.HighlightedSoundResource = string.Empty;
+			StyleSheet.ClickedSoundResource = string.Empty;
+			StyleSheet.CancelButtonSoundResource = string.Empty;
 			base.InitStyles();
 
 			//DefaultStyles.Instance().MainStyle.HasOutline = true;

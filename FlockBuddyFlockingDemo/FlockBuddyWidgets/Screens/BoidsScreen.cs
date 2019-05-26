@@ -47,6 +47,12 @@ namespace FlockBuddyWidgets
 				_flock.BoidWalkSpeed = walkSpeed.Number;
 			};
 
+			var laziness = AddBoidOption("Laziness", _flock.BoidLaziness);
+			laziness.OnNumberEdited += (obj, e) =>
+			{
+				_flock.BoidLaziness = laziness.Number;
+			};
+
 			var maxSpeed = AddBoidOption("Max Speed", _flock.BoidMaxSpeed);
 			maxSpeed.OnNumberEdited += (obj, e) =>
 			{
