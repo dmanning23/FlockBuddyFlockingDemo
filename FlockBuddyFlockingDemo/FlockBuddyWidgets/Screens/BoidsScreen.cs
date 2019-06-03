@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 namespace FlockBuddyWidgets
 {
 	/// <summary>
-	/// This 
+	/// This screen has all the widgets for adjusting boid parameters
 	/// </summary>
 	public class BoidsScreen : BaseTab
 	{

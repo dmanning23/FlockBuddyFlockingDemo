@@ -1,9 +1,11 @@
 ﻿using FlockBuddy;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
+using RandomExtensions;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Vector2Extensions;
 
 namespace FlockBuddyWidgets
 {
@@ -13,6 +15,8 @@ namespace FlockBuddyWidgets
 		FlockManager Flock { get; set; }
 
 		ILabel _numBoids;
+
+		Random _random = new Random();
 
 		public FlockScreen(FlockManager flock, List<FlockManager> flocks) : base("FlockScreen")
 		{
@@ -107,7 +111,9 @@ namespace FlockBuddyWidgets
 			});
 			addButton.OnClick += (obj, e) =>
 			{
-				Flock.AddBoid();
+				Flock.AddBoid(_random.NextVector2(0f, 1280f, 0f, 720f),
+					_random.NextVector2(-1f, 1f, -1f, 1f).Normalized(),
+					_random.NextFloat(Flock.BoidWalkSpeed, Flock.BoidMaxSpeed));
 				_numBoids.Text = Flock.Flock.Boids.Count.ToString();
 			};
 			flockButtons.AddItem(addButton);

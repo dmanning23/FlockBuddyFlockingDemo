@@ -1,4 +1,5 @@
-﻿using FlockBuddy;
+﻿using CellSpacePartitionLib;
+using FlockBuddy;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
 using ResolutionBuddy;
@@ -7,7 +8,7 @@ using System.Collections.Generic;
 namespace FlockBuddyWidgets
 {
 	/// <summary>
-	/// This is the screen that displays all the flocks
+	/// This is the screen that displays all the widgets for adjusting flocks
 	/// </summary>
 	public class FlocksScreen : BaseTab
 	{
@@ -53,7 +54,7 @@ namespace FlockBuddyWidgets
 			var flockManager = new FlockManager(new Flock());
 			Flocks.Add(flockManager);
 
-			flockManager.Flock.SetWorldSize(new Vector2(Resolution.ScreenArea.Width, Resolution.ScreenArea.Height));
+			flockManager.Flock.CellSpace = new CellSpacePartition<IMover>(Vector2.Zero, 80, 16, 32);
 
 			var flockControl = new FlockControl(flockManager, Flocks, this);
 

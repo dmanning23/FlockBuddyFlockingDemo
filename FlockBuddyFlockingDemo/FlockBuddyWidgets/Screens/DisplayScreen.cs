@@ -1,23 +1,40 @@
-﻿using FlockBuddy;
+﻿using CameraBuddy;
+using CellSpacePartitionLib;
+using FlockBuddy;
 using GameTimer;
 using HadoukInput;
+using InputHelper;
+using MatrixExtensions;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using MouseBuddy;
 using PrimitiveBuddy;
+using ResolutionBuddy;
 using System.Collections.Generic;
 
 namespace FlockBuddyWidgets
 {
-	public class DisplayScreen : Screen, IGameScreen
+	/// <summary>
+	/// This is the playing field for the boids to run aroud in
+	/// </summary>
+	public class DisplayScreen : WidgetScreen, IGameScreen
 	{
-		GameClock FlockTimer { get; set; }
-		List<FlockManager> Flocks { get; set; }
-		Primitive _prim;
+		protected GameClock FlockTimer { get; set; }
+		protected List<FlockManager> Flocks { get; set; }
+		protected Primitive Primitive;
 
-		public DisplayScreen(List<FlockManager> flocks)
+		protected bool DrawDebugCells { get; set;  }
+
+		protected bool DrawDebugBoids { get; set; }
+
+		public DisplayScreen(List<FlockManager> flocks) : base("DisplayScreen")
 		{
 			CoveredByOtherScreens = false;
 			CoverOtherScreens = false;
+
+			DrawDebugCells = true;
+			DrawDebugBoids = true;
 
 			Flocks = flocks;
 			FlockTimer = new GameClock();
@@ -27,7 +44,7 @@ namespace FlockBuddyWidgets
 		{
 			base.LoadContent();
 
-			_prim = new Primitive(ScreenManager.Game.GraphicsDevice, ScreenManager.SpriteBatch);
+			Primitive = new Primitive(ScreenManager.Game.GraphicsDevice, ScreenManager.SpriteBatch);
 		}
 
 		public override void Update(GameTime gameTime, bool otherWindowHasFocus, bool covered)
@@ -45,14 +62,43 @@ namespace FlockBuddyWidgets
 		{
 			base.Draw(gameTime);
 
-			ScreenManager.SpriteBatchBegin();
-
-			foreach (var flock in Flocks)
+			if (DrawDebugCells || DrawDebugBoids)
 			{
-				flock.Flock.Draw(_prim, flock.DebugColor);
-			}
+				SpriteBatchBegin();
 
-			ScreenManager.SpriteBatchEnd();
+				DrawCellSpace();
+				DrawBoids();
+
+				ScreenManager.SpriteBatchEnd();
+			}
+		}
+
+		public void DrawBoids()
+		{
+			if (DrawDebugBoids)
+			{
+				foreach (var flock in Flocks)
+				{
+					flock.Flock.Draw(Primitive, flock.DebugColor);
+				}
+			}
+		}
+
+		public void DrawCellSpace()
+		{
+			if (DrawDebugCells)
+			{
+				//draw just the first cellspace so we can see the grid
+				for (var i = 0; (i < Flocks.Count) && (i < 1); i++)
+				{
+					Flocks[i].Flock.DrawCells(Primitive);
+				}
+			}
+		}
+
+		public virtual void SpriteBatchBegin()
+		{
+			ScreenManager.SpriteBatchBegin();
 		}
 
 		public void HandleInput(InputState input)

@@ -3,6 +3,7 @@ using FlockBuddyWidgets;
 using FrameRateCounter;
 using InputHelper;
 using MenuBuddy;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
 namespace FlockBuddyFlockingDemo
@@ -21,6 +22,9 @@ namespace FlockBuddyFlockingDemo
 			fps.DrawOrder = 100;
 
 			_flocks = new List<FlockManager>();
+
+			VirtualResolution = new Point(1920, 1080);
+
 		}
 
 		protected override void LoadContent()
