@@ -1,8 +1,6 @@
 ﻿using FlockBuddy;
 using MenuBuddy;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace FlockBuddyWidgets
 {
@@ -16,9 +14,9 @@ namespace FlockBuddyWidgets
 			_flock = flock;
 		}
 
-		public override void LoadContent()
+		public override async Task LoadContent()
 		{
-			base.LoadContent();
+			await base.LoadContent();
 
 			//Add the header
 			AddHeader(_flock);

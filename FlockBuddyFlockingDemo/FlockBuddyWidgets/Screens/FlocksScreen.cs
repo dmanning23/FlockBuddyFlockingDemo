@@ -2,8 +2,8 @@
 using FlockBuddy;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
-using ResolutionBuddy;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FlockBuddyWidgets
 {
@@ -20,9 +20,9 @@ namespace FlockBuddyWidgets
 			Flocks = flocks;
 		}
 
-		public override void LoadContent()
+		public override async Task LoadContent()
 		{
-			base.LoadContent();
+			await base.LoadContent();
 
 			//add a button for each flock in the system
 			foreach (var flock in Flocks)

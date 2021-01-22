@@ -1,17 +1,12 @@
-﻿using CameraBuddy;
-using CellSpacePartitionLib;
-using FlockBuddy;
+﻿using FlockBuddy;
 using GameTimer;
 using HadoukInput;
-using InputHelper;
-using MatrixExtensions;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MouseBuddy;
 using PrimitiveBuddy;
-using ResolutionBuddy;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FlockBuddyWidgets
 {
@@ -24,9 +19,11 @@ namespace FlockBuddyWidgets
 		protected List<FlockManager> Flocks { get; set; }
 		protected Primitive Primitive;
 
-		protected bool DrawDebugCells { get; set;  }
+		protected bool DrawDebugCells { get; set; }
 
 		protected bool DrawDebugBoids { get; set; }
+
+		protected object _lock = new object();
 
 		public DisplayScreen(List<FlockManager> flocks) : base("DisplayScreen")
 		{
@@ -40,9 +37,9 @@ namespace FlockBuddyWidgets
 			FlockTimer = new GameClock();
 		}
 
-		public override void LoadContent()
+		public override async Task LoadContent()
 		{
-			base.LoadContent();
+			await base.LoadContent();
 
 			Primitive = new Primitive(ScreenManager.Game.GraphicsDevice, ScreenManager.SpriteBatch);
 		}
@@ -52,9 +49,13 @@ namespace FlockBuddyWidgets
 			base.Update(gameTime, otherWindowHasFocus, covered);
 
 			FlockTimer.Update(gameTime);
-			foreach (var flock in Flocks)
+
+			lock (_lock)
 			{
-				flock.Flock.Update(FlockTimer);
+				foreach (var flock in Flocks)
+				{
+					flock.Flock.Update(FlockTimer);
+				}
 			}
 		}
 
@@ -64,7 +65,7 @@ namespace FlockBuddyWidgets
 
 			if (DrawDebugCells || DrawDebugBoids)
 			{
-				SpriteBatchBegin();
+				SpriteBatchBegin(BlendState.NonPremultiplied);
 
 				DrawCellSpace();
 				DrawBoids();
@@ -96,12 +97,17 @@ namespace FlockBuddyWidgets
 			}
 		}
 
-		public virtual void SpriteBatchBegin()
+		public virtual void SpriteBatchBegin(Matrix matrix, BlendState blendState, SpriteSortMode sortMode = SpriteSortMode.Deferred)
 		{
-			ScreenManager.SpriteBatchBegin();
+			ScreenManager.SpriteBatchBegin(blendState, sortMode);
 		}
 
-		public void HandleInput(InputState input)
+		public virtual void SpriteBatchBegin(BlendState blendState, SpriteSortMode sortMode = SpriteSortMode.Deferred)
+		{
+			ScreenManager.SpriteBatchBegin(blendState, sortMode);
+		}
+
+		public void HandleInput(IInputState input)
 		{
 		}
 	}

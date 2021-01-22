@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework;
 using RandomExtensions;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using Vector2Extensions;
 
 namespace FlockBuddyWidgets
@@ -24,9 +24,9 @@ namespace FlockBuddyWidgets
 			Flock = flock;
 		}
 
-		public override void LoadContent()
+		public override async Task LoadContent()
 		{
-			base.LoadContent();
+			await base.LoadContent();
 
 			AddHeader(Flock);
 

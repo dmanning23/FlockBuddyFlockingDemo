@@ -1,13 +1,10 @@
 ﻿using FlockBuddy;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FlockBuddyWidgets
 {
-    public class BehaviorControl : StackLayout
+	public class BehaviorControl : StackLayout
 	{
 		public EBehaviorType Behavior { get; private set; }
 		readonly BehaviorsScreen _behaviorScreen;

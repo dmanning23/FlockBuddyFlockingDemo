@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace FlockBuddyWidgets
 {
@@ -35,9 +36,9 @@ namespace FlockBuddyWidgets
 			OnSelect += OnAddGroups;
 		}
 
-		protected override void AddAddtionalControls()
+		protected override async Task AddAdditionalControls()
 		{
-			base.AddAddtionalControls();
+			await base.AddAdditionalControls();
 
 			//add a shim between the text and the buttons
 			ControlStack.AddItem(new Shim() { Size = new Vector2(0, 16f) });

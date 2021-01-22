@@ -1,6 +1,7 @@
 ﻿using FlockBuddy;
 using MenuBuddy;
 using Microsoft.Xna.Framework;
+using System.Threading.Tasks;
 
 namespace FlockBuddyWidgets
 {
@@ -16,9 +17,9 @@ namespace FlockBuddyWidgets
 			_flock = flock;
 		}
 
-		public override void LoadContent()
+		public override async Task LoadContent()
 		{
-			base.LoadContent();
+			await base.LoadContent();
 
 			//Add the header
 			AddHeader(_flock);
