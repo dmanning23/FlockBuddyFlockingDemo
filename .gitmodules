@@ -1,0 +1,3 @@
+[submodule "FlockBuddyWidgets"]
+	path = FlockBuddyWidgets
+	url = git@bitbucket.org:the_dannobot/flockbuddywidgets.git
