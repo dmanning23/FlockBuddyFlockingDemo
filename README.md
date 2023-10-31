@@ -1,4 +1,3 @@
-FlockBuddyFlockingDemo
-======================
+This repo is deprecated and can be found at:
 
-this is a little game to show off the flocking functionality in the FlockBuddy library
+https://github.com/dmanning23/FlockBuddy/tree/master/FlockBuddyFlockingDemo
